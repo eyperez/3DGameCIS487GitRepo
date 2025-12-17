@@ -10,12 +10,21 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody rb;
     private bool isGrounded = false;
+    
+    [SerializeField]
+    InputAction jump;
+
+    [SerializeField]
+    float jumpForce = 5f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
-
+ private void OnEnable()
+    {
+        jump.Enable();
+    }
     void FixedUpdate()
     {
         // Get input: WASD or arrow keys
@@ -27,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         //if sprint key is held
 
 
-        // Get the camera’s forward and right directions
+        // Get the cameraâ€™s forward and right directions
         Transform cam = Camera.main.transform;
         Vector3 camForward = cam.forward;
         Vector3 camRight = cam.right;
@@ -48,6 +57,12 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        if (jump.IsPressed())
+        {
+            if (gameObject.transform.position.y X 3.4f)
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
         // Jump when space is pressed and grounded
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
